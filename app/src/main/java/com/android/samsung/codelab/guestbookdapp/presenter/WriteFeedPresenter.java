@@ -10,16 +10,20 @@ import com.android.samsung.codelab.guestbookdapp.model.Feed;
 import com.android.samsung.codelab.guestbookdapp.model.UserInfo;
 import com.android.samsung.codelab.guestbookdapp.remote.RemoteManager;
 import com.android.samsung.codelab.guestbookdapp.util.AppExecutors;
+import com.samsung.android.sdk.coldwallet.ScwCoinType;
 import com.samsung.android.sdk.coldwallet.ScwService;
 
 import org.web3j.abi.FunctionEncoder;
 import org.web3j.abi.datatypes.Function;
+import org.web3j.abi.datatypes.Utf8String;
 import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.TransactionEncoder;
 import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 
 public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
@@ -50,8 +54,8 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
             BigInteger nonce = getNonce();
 
 
-            // TODO : Make post comment Raw Transaction
-            // TODO : make unsigned tx by Web3j TransactionEncoder
+            // TODO : Make post comment Raw Transaction (Live code)
+            // make unsigned tx by Web3j TransactionEncoder
 //            RawTransaction tx = createPostTransaction(nonce);
 //            byte[] unsignedTx = TransactionEncoder.encode(tx);
             signTransaction(unsignedTx, (success, message) -> {
@@ -74,13 +78,18 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
 
     private RawTransaction createPostTransaction(BigInteger nonce) {
         Feed feed = UserInfo.getInstance().getFeedToWrite();
-        // TODO : Make Web3j Function to call Post Smartcontract call
-        // TODO : Encode function to HEX String
+        // TODO : Make Web3j Function to call Post Smart contract call (Live code)
+        // Encode function to HEX String
+
         /*
-        Function func = FunctionUtil.createPostSmartContractCall(feed.getName()
-                , feed.getComment()
-                , feed.getDate()
-                , feed.getEmoji());
+        Function func = new Function("post"
+                , Arrays.asList(
+                new Utf8String(feed.getName())
+                , new Utf8String(feed.getComment())
+                , new Utf8String(feed.getDate())
+                , new Utf8String(feed.getEmoji()))
+                , Collections.emptyList());
+
         String data = FunctionEncoder.encode(func);
 
         return RawTransaction.createTransaction(
@@ -90,8 +99,6 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
                 , FunctionUtil.CONTRACT_ADDRESS
                 , data);
          */
-
-        return null;
     }
 
     private BigInteger getNonce() {
@@ -110,26 +117,9 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
     private void signTransaction(byte[] unsignedTx, SignTransactionListener listener) {
 
         // TODO : Sign the transaction with Samsung blockchain keystore
-        // TODO : and Send Eth Transaction
-        // Use HDPath m/44'/60'/0'/0/0
-        /*
-        final String HDPath = "m/44'/60'/0'/0/0";
-
-        ScwService.getInstance().signEthTransaction(
-                new ScwService.ScwSignEthTransactionCallback() {
-                    @Override
-                    public void onSuccess(byte[] signedTransaction) {
-                        boolean result = sendSignedTransaction(signedTransaction);
-                        listener.transactionDidFinish(result, "");
-                    }
-
-                    @Override
-                    public void onFailure(int errorCode, @Nullable String errorMsg) {
-                        listener.transactionDidFinish(false, "Error code : " + errorCode);
-                    }
-
-                }, unsignedTx, HDPath);
-         */
+        // Success, Send Eth Transaction > sendSignedTransaction(signedTransaction) and Update listener
+        // fail, update listener
+        // Update Listener call > listener.transactionDidFinish(result, "");
 
     }
 
