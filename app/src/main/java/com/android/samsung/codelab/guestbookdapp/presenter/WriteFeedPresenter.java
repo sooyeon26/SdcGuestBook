@@ -56,8 +56,8 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
 
             // TODO : Make post comment Raw Transaction (Live code)
             // make unsigned tx by Web3j TransactionEncoder
-//            RawTransaction tx = createPostTransaction(nonce);
-//            byte[] unsignedTx = TransactionEncoder.encode(tx);
+            RawTransaction tx = createPostTransaction(nonce);
+            byte[] unsignedTx = TransactionEncoder.encode(tx);
             signTransaction(unsignedTx, (success, message) -> {
                 if (success) {
                     contract.toastMessage("Success to post your comment");
@@ -81,7 +81,6 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
         // TODO : Make Web3j Function to call Post Smart contract call (Live code)
         // Encode function to HEX String
 
-        /*
         Function func = new Function("post"
                 , Arrays.asList(
                 new Utf8String(feed.getName())
@@ -98,7 +97,7 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
                 , BigInteger.valueOf(1_000_000L)
                 , FunctionUtil.CONTRACT_ADDRESS
                 , data);
-         */
+
     }
 
     private BigInteger getNonce() {
@@ -117,9 +116,20 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
     private void signTransaction(byte[] unsignedTx, SignTransactionListener listener) {
 
         // TODO : Sign the transaction with Samsung blockchain keystore
-        // Success, Send Eth Transaction > sendSignedTransaction(signedTransaction) and Update listener
-        // fail, update listener
-        // Update Listener call > listener.transactionDidFinish(result, "");
+
+        ScwService.getInstance().signEthTransaction(new ScwService.ScwSignEthTransactionCallback() {
+            @Override
+            public void onSuccess(byte[] signedTransaction) {
+                sendSignedTransaction(signedTransaction);
+                listener.transactionDidFinish(true, "");
+            }
+
+            @Override
+            public void onFailure(int errorCode, @Nullable String errorMsg) {
+                listener.transactionDidFinish(false, "errorCode = " + errorCode);
+            }
+        }, unsignedTx, ScwService.getHdPath(ScwCoinType.ETH, 0));
+
 
     }
 

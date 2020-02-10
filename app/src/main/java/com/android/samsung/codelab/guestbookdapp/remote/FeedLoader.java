@@ -69,7 +69,7 @@ public class FeedLoader {
         // Make Eth Call Transaction
         // send ETH Call
 
-        /*
+
         Function functionGetPost = FunctionUtil.createGetPostSmartContractCall(index);
         String data = FunctionEncoder.encode(functionGetPost);
         Transaction tx = Transaction.createEthCallTransaction(address, FunctionUtil.CONTRACT_ADDRESS, data);
@@ -78,7 +78,6 @@ public class FeedLoader {
         if (result.hasError()) {
             throw new Exception("Get Post eth call error" + result.getError().getMessage());
         }
-         */
 
         String value = result.getValue();
         List<TypeReference<Type>> outputParameters = functionGetPost.getOutputParameters();
