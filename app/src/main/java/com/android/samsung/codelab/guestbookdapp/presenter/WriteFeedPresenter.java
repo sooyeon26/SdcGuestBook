@@ -48,8 +48,12 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
         AppExecutors.getInstance().networkIO().execute(() -> {
 
             BigInteger nonce = getNonce();
-            RawTransaction tx = createPostTransaction(nonce);
-            byte[] unsignedTx = TransactionEncoder.encode(tx);
+
+
+            // TODO : Make post comment Raw Transaction
+            // TODO : make unsigned tx by Web3j TransactionEncoder
+//            RawTransaction tx = createPostTransaction(nonce);
+//            byte[] unsignedTx = TransactionEncoder.encode(tx);
             signTransaction(unsignedTx, (success, message) -> {
                 if (success) {
                     contract.toastMessage("Success to post your comment");
@@ -70,6 +74,9 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
 
     private RawTransaction createPostTransaction(BigInteger nonce) {
         Feed feed = UserInfo.getInstance().getFeedToWrite();
+        // TODO : Make Web3j Function to call Post Smartcontract call
+        // TODO : Encode function to HEX String
+        /*
         Function func = FunctionUtil.createPostSmartContractCall(feed.getName()
                 , feed.getComment()
                 , feed.getDate()
@@ -82,6 +89,9 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
                 , BigInteger.valueOf(1_000_000L)
                 , FunctionUtil.CONTRACT_ADDRESS
                 , data);
+         */
+
+        return null;
     }
 
     private BigInteger getNonce() {
@@ -99,8 +109,10 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
 
     private void signTransaction(byte[] unsignedTx, SignTransactionListener listener) {
 
-        // Sign the transaction with Samsung blockchain keystore
+        // TODO : Sign the transaction with Samsung blockchain keystore
+        // TODO : and Send Eth Transaction
         // Use HDPath m/44'/60'/0'/0/0
+        /*
         final String HDPath = "m/44'/60'/0'/0/0";
 
         ScwService.getInstance().signEthTransaction(
@@ -117,6 +129,7 @@ public class WriteFeedPresenter implements WriteFeedContract.PresenterContract {
                     }
 
                 }, unsignedTx, HDPath);
+         */
 
     }
 

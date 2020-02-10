@@ -63,11 +63,16 @@ public class FeedLoader {
     }
 
     private Feed getPost(int index) throws Exception {
-        Function functionGetPost = FunctionUtil.createGetPostSmartContractCall(index);
-        String data = FunctionEncoder.encode(functionGetPost);
-        Transaction tx = Transaction.createEthCallTransaction(address, FunctionUtil.CONTRACT_ADDRESS, data);
 
-        EthCall result = RemoteManager.getInstance().sendEthCall(tx);
+        // TODO : Make Get Post Smart Contract call
+        // Function functionGetPost = FunctionUtil.createGetPostSmartContractCall(index);
+        // TODO : encode function with FunctionEncoder
+        // String data = FunctionEncoder.encode(functionGetPost);
+        // TODO : Make Eth Call Transaction
+        // Transaction tx = Transaction.createEthCallTransaction(address, FunctionUtil.CONTRACT_ADDRESS, data);
+
+        // TODO : Send Eth Call
+        //EthCall result = RemoteManager.getInstance().sendEthCall(tx);
         if (result.hasError()) {
             throw new Exception("Get Post eth call error" + result.getError().getMessage());
         }
