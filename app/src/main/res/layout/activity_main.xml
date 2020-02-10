@@ -111,7 +111,7 @@
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/montserrat_light"
                 android:gravity="center"
-                android:text="SDC19 Comments"
+                android:text="Founders Comments"
                 android:textColor="@color/colorAccent"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".TimelineActivity"
-            android:label="SDC19 Comments" />
+            android:label="Founders comments" />
         <activity
             android:name=".WriteFeedActivity"
             android:label="Write a comment"
